@@ -31,8 +31,9 @@
                         Blog Login Platform
                     </div>
                 </h2>
-<!--                方法用Post-->
-                <form class="ui large form" method="post" action="#">
+                <!--                方法用Post-->
+                <!--                th:action登入進去-->
+                <form class="ui large form" method="post" action="#" th:action="@{/admin/login}">
                     <div class="ui segment">
                         <div class="field">
                             <div class="ui left icon input">
@@ -46,10 +47,13 @@
                                 <input type="password" name="password" placeholder="Password">
                             </div>
                         </div>
-                        <div class="ui fluid large teal submit button">Login</div>
+                        <!--                        這裡改button-->
+                        <button class="ui fluid large teal submit button">Login</button>
                     </div>
 
-                    <div class="ui error message"></div>
+                    <div class="ui error mini message"></div>
+                    <!--                    有值才會顯示-->
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用戶名或是密碼錯誤</div>
 
                 </form>
 
@@ -65,6 +69,28 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
 
+<!--空白的表單驗證-->
+<script>
+    $('.ui.form').form({
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入用户名'
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入密码'
+                }]
+            }
+        }
+    });
+</script>
+<!---->
 
 </body>
 </html>
