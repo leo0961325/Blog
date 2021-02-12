@@ -54,7 +54,8 @@
 <div id="waypoint" class="m-container-small m-padded-tb-big animated fadeIn">
     <div class="ui container">
         <!--        Header-->
-        <form action="#" method="post" class="ui form">
+<!--        Submit提交後返回types頁面-->
+        <form action="#" method="post" th:action = @{/admin/types} class="ui form">
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">分類名稱</label>
@@ -72,7 +73,8 @@
             <div class="ui right aligned container">
                 <!--                button 要給他type，默認是提交表單 window.history.go(-1)返回上一個頁面-->
                 <button type="button" class="ui button" onclick="window.history.go(-1)">Turn Back</button>
-                <button class="ui teal button">Submit</button>
+<!--                2/12 加入css submit提交自動提交-->
+                <button class="ui teal submit button">Submit</button>
             </div>
 
 
