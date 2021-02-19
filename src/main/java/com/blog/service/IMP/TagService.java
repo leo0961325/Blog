@@ -56,13 +56,13 @@ public class TagService implements ITagService {
     @Transactional
     @Override
     public Tag updateTag(Long id, Tag tag) {
-        Optional<Tag> getTypeById = Optional.of(itagRepository.getOne(id));
-        if (!getTypeById.isPresent()) {
+        Optional<Tag> getTagById = Optional.of(itagRepository.getOne(id));
+        if (!getTagById.isPresent()) {
             throw new NotFoundException("Id is not exist");
 
         }
-        //Optional -> Type
-        Tag tagTarget = getTypeById.get();
+        //Optional -> Tag
+        Tag tagTarget = getTagById.get();
         //source,target
         BeanUtils.copyProperties(tag, tagTarget);
 
