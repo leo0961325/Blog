@@ -61,19 +61,26 @@
                     <input type="text" name="title" placeholder="Title">
                 </div>
                 <div class="field">
-                    <div class="ui selection dropdown">
-                        <input type="hidden" name="typeId">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">分類</div>
-                        <div class="menu">
-                            <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}"
-                                 th:text="${type.name}">日誌
+
+                    <div class="ui lebeled action input">
+<!--                        當點clear清除按鈕 "type selection dropdown"才有效果-->
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分類</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}"
+                                     th:text="${type.name}">日誌
+                                </div>
+                                <!--/*-->
+                                <div class="item" data-value="2">他的手可以穿過我的八八</div>
+                                <!--*/-->
                             </div>
-                            <!--/*-->
-                            <div class="item" data-value="2">他的手可以穿過我的八八</div>
-                            <!--*/-->
                         </div>
+                        <!--                    清除按鈕 :clear-btn對應js function-->
+                        <button id="clear-btn" class="ui compact button">Clear</button>
                     </div>
+
                 </div>
 
                 <div class="field">
@@ -101,6 +108,7 @@
                     <th>Title</th>
                     <th>Type</th>
                     <th>Recommend</th>
+                    <th>Status</th>
                     <th>Update Time</th>
                     <th>operating</th>
                 </tr>
@@ -113,6 +121,7 @@
                     <td th:text="${blog.title}">文章標題</td>
                     <td th:text="${blog.type.name}">分類名稱</td>
                     <td th:text="${blog.recommend} ? '是':'否'">是否推薦</td>
+                    <td th:text="${blog.published} ? '草稿':'發布'">草稿或發布</td>
                     <td th:text="${blog.updateTime}">更新的時間</td>
                     <td>
                         <!--          編輯          input.id會替換前面的{id}-->
@@ -134,8 +143,10 @@
                             <!--                        上一頁和下一頁都是在content page裡面的number , 上一頁-1下一頁+1-->
                             <!--                        th:unless 除非他是第一頁不然不跳轉;除非是最後一頁不然不跳轉-->
                             <!--                        連結上面的input type="hidden" name="page"  和下面的JS方法連結-->
-                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Last Page</a>
-                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next Page</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item"
+                               th:unless="${page.first}">Last Page</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item"
+                               th:unless="${page.last}">Next Page</a>
                         </div>
                         <a href="#" th:href="@{/admin/blogs/input}"
                            class="ui mini right floated teal basic button">Add</a>
@@ -214,6 +225,17 @@
         on: 'hover'
     });
 
+    //清除按鈕
+    $('#clear-btn')
+        .on('click', function () {
+            alert("AAAAAAAAAAAAAAAAAAA")
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        })
+    ;
+
+
     //page的賦值 拿到名為page的物件給予page data
     function page(obj) {
         $("[name='page']").val($(obj).data("page"));
@@ -221,8 +243,10 @@
         loaddata(); //點擊分頁也要用到的方法
     }
 
+
     //搜索按鈕點擊方法
     $("#search-btn").click(function () {
+        $("[name='page']").val(0);
         loaddata();
     });
 

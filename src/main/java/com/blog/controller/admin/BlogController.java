@@ -43,7 +43,7 @@ public class BlogController {
     //@PageableDefault 一頁筆數;根據更新時間,排序方式->降冪
     //改BlogQuery 2/20
     @GetMapping("/blogs")
-    public String blogs(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String blogs(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog, Model model) {
         //渲染Type到前端去
         model.addAttribute("types",iTypeService.listType());
@@ -61,12 +61,12 @@ public class BlogController {
      * @return
      */
     @PostMapping("/blogs/search")
-    public String search(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          BlogQuery blog, Model model) {
 
         model.addAttribute("page", iBlogService.listBlog(pageable, blog));
         //blogList 為 blogsAdmin底下的片段
-        return REDIRECT_LIST;
+        return "admin/blogs :: blogList";
 
 
     }

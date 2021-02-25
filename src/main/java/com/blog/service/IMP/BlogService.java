@@ -41,7 +41,6 @@ public class BlogService implements IBlogService {
 
 
     @Override
-    @Transactional
     public Page<Blog> listBlog(Pageable pageable, BlogQuery blog) {
         //findAll 選 Specification 那一個
         return iBlogRepository.findAll(new Specification<Blog>() {
@@ -55,7 +54,7 @@ public class BlogService implements IBlogService {
                 //如果title不為空值
                 if (!"".equals(blog.getTitle()) && blog.getTitle() !=null){
                     //取名為SQL為title的 (屬性名字,屬性值)
-                    predicates.add(cb.like(root.get("title") ,"%"+blog.getTitle()+"%"));
+                    predicates.add(cb.like(root.<String>get("title") ,"%"+blog.getTitle()+"%"));
                 }
                 //找分類
                 if (blog.getTypeId() != null){
