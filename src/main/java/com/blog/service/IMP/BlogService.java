@@ -86,7 +86,12 @@ public class BlogService implements IBlogService {
         }
         //Edit如果有就編輯
         else {
+            //修正編輯時候CreateTime和Views會被洗掉問題 之後看有沒要在修正 2/27
+            Optional<Blog> findBlogById = iBlogRepository.findById(blog.getId());
+            blog.setCreateTime(findBlogById.get().getCreateTime());
+            blog.setViews(findBlogById.get().getViews());
             blog.setUpdateTime(new Date());
+
         }
         return iBlogRepository.save(blog);
     }
