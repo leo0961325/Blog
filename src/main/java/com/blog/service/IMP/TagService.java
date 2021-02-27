@@ -68,7 +68,7 @@ public class TagService implements ITagService {
     //轉換成List
     private List<Long> convertToList(String ids){
         List<Long> list = new ArrayList<>();
-        if ("".equals(ids) && ids != null){
+        if (!"".equals(ids) && ids != null){
             String[] idarray = ids.split(",");
             for (int i=0 ; i < idarray.length ; i++){
                 list.add(new Long(idarray[i]));

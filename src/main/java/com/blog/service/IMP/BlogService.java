@@ -73,19 +73,26 @@ public class BlogService implements IBlogService {
 
     }
 
-    @Override
     @Transactional
+    @Override
     public Blog saveBlog(Blog blog) {
 
-        blog.setCreateTime(new Date());
-        blog.setUpdateTime(new Date());
-        blog.setViews(0); //初始瀏覽次數
+        //Add:如果不存在就新增
+        if(blog.getId() == null){
+            blog.setCreateTime(new Date());
+            blog.setUpdateTime(new Date());
+            blog.setViews(0); //初始瀏覽次數
 
+        }
+        //Edit如果有就編輯
+        else {
+            blog.setUpdateTime(new Date());
+        }
         return iBlogRepository.save(blog);
     }
 
-    @Override
     @Transactional
+    @Override
     public Blog updateBlog(Long id, Blog blog) throws NotFoundException {
 
         Optional<Blog> findBlogById = iBlogRepository.findById(id);

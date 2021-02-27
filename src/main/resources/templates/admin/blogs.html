@@ -42,8 +42,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="item">Post</a>
-            <a href="#" class="teal active item">List</a>
+            <a href="#" th:href="@{/admin/blogs/input}" class="teal item">Post</a>
+            <a href="#" th:href="@{/admin/blogs}" class="teal active item">List</a>
         </div>
 
     </div>
@@ -122,7 +122,7 @@
                     <td th:text="${blog.title}">文章標題</td>
                     <td th:text="${blog.type.name}">分類名稱</td>
                     <td th:text="${blog.recommend} ? '是':'否'">是否推薦</td>
-                    <td th:text="${blog.published} ? '草稿':'發布'">草稿或發布</td>
+                    <td th:text="${blog.published} ? '發布':'草稿'">草稿或發布</td>
                     <td th:text="${blog.updateTime}">更新的時間</td>
                     <td>
                         <!--          編輯          input.id會替換前面的{id}-->

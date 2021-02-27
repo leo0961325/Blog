@@ -7,6 +7,7 @@ import com.blog.service.IBlogService;
 import com.blog.service.ITagService;
 import com.blog.service.ITypeService;
 import com.blog.vo.BlogQuery;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -79,13 +81,36 @@ public class BlogController {
     @GetMapping("/blogs/input")
     public String input(Model model){
         //初始化
-        model.addAttribute("types",iTypeService.listType());
-        model.addAttribute("tags",iTagService.listTag());
+        setTypeAndTag(model);
         model.addAttribute("blog" , new Blog());
 
 
         return INPUT;
     }
+    private void setTypeAndTag(Model model){
+        model.addAttribute("types",iTypeService.listType());
+        model.addAttribute("tags",iTagService.listTag());
+
+    }
+
+
+    /**
+     * 修改
+     * @param model
+     * @return
+     */
+    @GetMapping("/blogs/{id}/input")
+    public String editInput(@PathVariable Long id , Model model){
+        //初始化
+        setTypeAndTag(model);
+        Blog blog = iBlogService.getBlog(id);
+        blog.init();
+        model.addAttribute("blog" , blog);
+
+
+        return INPUT;
+    }
+
 
 
     /**
@@ -110,6 +135,16 @@ public class BlogController {
             attributes.addFlashAttribute("message","操作成功!!");
         }
 
+        return REDIRECT_LIST;
+    }
+
+
+    @GetMapping("/blogs/{id}/delete")
+    public String delete(@PathVariable Long id , RedirectAttributes attributes) throws NotFoundException {
+
+        iBlogService.deleteBlog(id);
+        //渲染到types的message search:提示
+        attributes.addFlashAttribute("message","刪除成功！");
         return REDIRECT_LIST;
     }
 
