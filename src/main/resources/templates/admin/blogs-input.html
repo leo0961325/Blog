@@ -126,6 +126,10 @@
                 </div>
             </div>
 
+            <div class="required field">
+                <textarea name="description" th:text="*{description}" placeholder="博客描述..." maxlength="200"></textarea>
+            </div>
+
 
 
             <!--checkbox 包含:推薦 分享 打賞 評論-->
@@ -290,6 +294,13 @@
                 rules: [{
                     type : 'empty',
                     prompt: '標題:請輸入Blog 圖片'
+                }]
+            },
+            description : {
+                identifier: 'description',
+                rules: [{
+                    type : 'empty',
+                    prompt: '标题：请输入博客描述'
                 }]
             }
         }

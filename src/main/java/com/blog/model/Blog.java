@@ -60,6 +60,8 @@ public class Blog {
     @Transient
     private String typeIds;
 
+    private String description;
+
 
     public Blog() {
     }
@@ -216,6 +218,14 @@ public class Blog {
         this.typeIds = typeIds;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     /**
      *  初始化方法，TagId處理成字符串
      */
@@ -243,6 +253,9 @@ public class Blog {
         }
     }
 
+
+
+
     @Override
     public String toString() {
         return "Blog{" +
@@ -259,6 +272,13 @@ public class Blog {
                 ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
+                ", tagIds='" + tagIds + '\'' +
+                ", typeIds='" + typeIds + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
