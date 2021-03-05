@@ -10,7 +10,9 @@ import javassist.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +79,20 @@ public class BlogService implements IBlogService {
     @Override
     public Page<Blog> listBlog(Pageable pageable) {
         return iBlogRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Blog> listRecommendBlog(Integer size) {
+
+        //https://blog.csdn.net/weixin_44216706/article/details/106480251
+        //查看源码，原来是Sort的构造器私有了private；所以不能通过new Sort()的方式来创建Sort对象
+        Sort sort = Sort.by(Sort.Direction.DESC , "updateTime");
+
+        //https://stackoverflow.com/questions/44848653/pagerequest-constructors-have-been-deprecated
+        Pageable pageable = PageRequest.of(0 , size , sort);
+
+
+        return iBlogRepository.findTop(pageable);
     }
 
 

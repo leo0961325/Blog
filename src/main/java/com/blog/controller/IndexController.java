@@ -42,13 +42,15 @@ public class IndexController {
         model.addAttribute("page" , iBlogService.listBlog(pageable));
         model.addAttribute("types",iTypeService.listTypeTop(6));
         model.addAttribute("tags",iTagService.listTagTop(10));
+        model.addAttribute("recommendBlogs" , iBlogService.listRecommendBlog(8));
+
 
         System.out.println("------------index-----------");
         //如果是資料夾下要在加 dir/index
         return "index";
     }
 
-    @GetMapping(value = "/blog")
+    @GetMapping(value = "/blog/{id}")
     public String blog() {
 
         //錯誤的範例使用
