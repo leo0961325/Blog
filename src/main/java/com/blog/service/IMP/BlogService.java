@@ -1,3 +1,4 @@
+
 package com.blog.service.IMP;
 
 
@@ -5,6 +6,7 @@ import com.blog.model.Blog;
 import com.blog.model.Type;
 import com.blog.repository.IBlogRepository;
 import com.blog.service.IBlogService;
+import com.blog.util.MarkdownUtils;
 import com.blog.vo.BlogQuery;
 import javassist.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +40,27 @@ public class BlogService implements IBlogService {
     @Transactional
     public Blog getBlog(Long id) {
         return iBlogRepository.getOne(id);
+    }
+
+    @Override
+    public Blog getAndConvert(Long id) throws NotFoundException {
+
+        Optional<Blog> blog = Optional.of(iBlogRepository.getOne(id));
+
+        if(!blog.isPresent()){
+            throw new NotFoundException("該BLog不存在");
+        }
+        Blog blogGetById = blog.get();
+
+        Blog blogTarget = new Blog();
+
+        BeanUtils.copyProperties(blogGetById,blogTarget);
+
+        String content = blogTarget.getContent();
+
+        blogTarget.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+        return blogTarget;
     }
 
 

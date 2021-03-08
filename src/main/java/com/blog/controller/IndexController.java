@@ -1,11 +1,11 @@
 package com.blog.controller;
 
 
-import com.blog.exception.NotFoundException;
 import com.blog.service.IBlogService;
 import com.blog.service.ITagService;
 import com.blog.service.ITypeService;
 import com.blog.vo.BlogQuery;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,16 +66,10 @@ public class IndexController {
 
 
     @GetMapping(value = "/blog/{id}")
-    public String blog() {
+    public String blog(@PathVariable Long id,
+                       Model model) throws NotFoundException {
 
-        //錯誤的範例使用
-        //int x = 9/0;
-
-//        String blog = null;
-//        if (blog == null){
-//
-//            throw new NotFoundException("Blog not exist");
-//        }
+        model.addAttribute("blog" ,iBlogService.getAndConvert(id));
 
         return "blog";
     }
