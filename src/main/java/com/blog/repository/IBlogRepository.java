@@ -24,7 +24,8 @@ public interface IBlogRepository extends JpaRepository<Blog,Long> , JpaSpecifica
         List<Blog> findTop(Pageable pageable);
 
         //全域搜索查詢
-        @Query("SELECT b FROM Blog b WHERE b.title LIKE ?1 or b.content LIKE ?1")
+        //包含 1.標題 2.文章內容 3.表頭敘述等
+        @Query("SELECT b FROM Blog b WHERE b.title LIKE ?1 OR b.content LIKE ?1 OR b.description LIKE ?1")
         Page<Blog> findByQuery(String query,Pageable pageable);
 
 
