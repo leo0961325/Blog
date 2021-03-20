@@ -42,6 +42,7 @@ public class BlogService implements IBlogService {
         return iBlogRepository.getOne(id);
     }
 
+    @Transactional
     @Override
     public Blog getAndConvert(Long id) throws NotFoundException {
 
@@ -59,6 +60,9 @@ public class BlogService implements IBlogService {
         String content = blogTarget.getContent();
 
         blogTarget.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+        //更新瀏覽次數
+        iBlogRepository.updateViews(id);
 
         return blogTarget;
     }
