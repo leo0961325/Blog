@@ -25,8 +25,8 @@ public class CommentService implements ICommentService {
 
     @Override
     public List<Comment> listCommentByBlogId(Long blogId) {
-
-        Sort sort = Sort.by(Sort.Direction.DESC , "createTime");
+        //2021.03.21 更改為升冪
+        Sort sort = Sort.by(Sort.Direction.ASC , "createTime");
 
         //findByBlogIdAndParentCommentNot JPA提供方法，只找父級為空(即為頂級節點)
         List<Comment> comments = iCommentRepository.findByBlogIdAndParentCommentNull(blogId,sort);
