@@ -20,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BlogService implements IBlogService {
@@ -138,6 +135,28 @@ public class BlogService implements IBlogService {
 
 
         return iBlogRepository.findTop(pageable);
+    }
+
+    //Blog 歸檔使用
+    //Map<年份 , List<部落格文章>>
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+
+        List<String> years = iBlogRepository.findGroupYear();
+        Map<String , List<Blog>> map = new HashMap<>();
+        for (String year : years){
+
+            map.put(year,iBlogRepository.findByYear(year));
+        }
+
+
+        return map;
+    }
+
+    //共有幾篇Blog文章
+    @Override
+    public Long countBlog() {
+        return iBlogRepository.count();
     }
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>歸檔頁面</title>
@@ -10,7 +10,7 @@
 <body>
 
 <!--導航-->
-<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Blog</h2>
@@ -43,13 +43,24 @@
                     <h3 class="ui teal header">歸檔</h3>
                 </div>
                 <div class="right aligned column">
-                    共<h2 class="ui orange header m-inline-block m-text-thin">124</h2>篇BLog
+                    共<h2 class="ui orange header m-inline-block m-text-thin" th:text="${blogCount}">124</h2>篇BLog
                 </div>
             </div>
         </div>
 <!--fluid 填充整個寬度-->
-        <h3 class="ui center aligned header">2021</h3>
+<!--        th:block不會破壞原本html的內容等-->
+        <th:block th:each="item : ${archiveMap}">
+
+        <h3 class="ui center aligned header" th:text="${item.key}">2021</h3>
         <div class="ui fluid vertical menu">
+            <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${item.value}">
+                <span>
+                    <i class="mini teal circle icon"></i><span th:text="${blog.title}">關於潛水</span>
+                    <div class="ui teal basic left pointing label m-padded-mini" th:text="${#dates.format(blog.updateTime,'MMMdd')}">1月5日</div>
+                </span>
+                <div class="ui orange basic left pointing label m-padded-mini" th:text="${blog.flag}">原創</div>
+            </a>
+            <!--/*-->
             <a href="#" target="_blank" class="item">
                 <span>
                     <i class="mini teal circle icon"></i>  關於潛水
@@ -78,52 +89,11 @@
                 </span>
                 <div class="ui orange basic left pointing label m-padded-mini">原創</div>
             </a>
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
+            <!--*/-->
         </div>
-        <h3 class="ui center aligned header">2020</h3>
-        <div class="ui fluid vertical menu">
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
-            <a href="#" target="_blank" class="item">
-                <span>
-                    <i class="mini teal circle icon"></i>  關於潛水
-                    <div class="ui teal basic left pointing label m-padded-mini">1月5日</div>
-                </span>
-                <div class="ui orange basic left pointing label m-padded-mini">原創</div>
-            </a>
-        </div>
+        </th:block>
+
+
     </div>
 </div>
 
@@ -131,7 +101,7 @@
 <br>
 <br>
 <!--底部footer-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
@@ -167,9 +137,11 @@
 
 </footer>
 
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<!--/*/</th:block>/*/-->
 
 
 <script>

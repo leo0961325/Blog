@@ -35,4 +35,11 @@ public interface IBlogRepository extends JpaRepository<Blog,Long> , JpaSpecifica
         @Modifying
         @Query("UPDATE Blog b SET b.views = b.views + 1 WHERE b.id = ?1 ")
         int updateViews(Long id);
+
+        //查詢所有年分，並GroupBY，使用JPQL的function
+        @Query("SELECT function('date_format',b.updateTime,'%Y') AS year FROM Blog b  GROUP BY year")
+        List<String> findGroupYear();
+
+        @Query("SELECT b FROM Blog b WHERE function('date_format' ,b.updateTime,'%Y' ) = ?1")
+        List<Blog> findByYear(String year);
 }
