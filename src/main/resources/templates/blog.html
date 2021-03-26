@@ -473,38 +473,42 @@ h5,h6{font-size:1em;}
                 <h5 id="appendix2">2、开源许可</h5>
 
 
-            </div>
+
 
             <!--標籤-->
             <div class="m-padded-lr-responsive">
                 <div class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法論</div>
             </div>
 
-            <!--付錢-->
+        </div>
+
+        <div th:if="${blog.appreciation}">
             <div class="ui center aligned basic segment">
                 <button id="payButton" class="ui brown basic circular button">打賞</button>
             </div>
-
-        </div>
-        <div class="ui payQR flowing popup transition hidden">
-            <div class="ui brown basic label">
-                <div class="ui images" style="font-size: inherit !important;">
-                    <div class="image">
-                        <img src="https://picsum.photos/id/163/200/300" th:src="@{https://picsum.photos/id/163/200/300}" alt="" class="ui rounded bordered image"
-                             style="width: 120px">
-                        <div>Pay 1</div>
-                    </div>
-                    <div class="image">
-                        <img src="https://picsum.photos/id/155/200/300" th:src="@{https://picsum.photos/id/155/200/300}" alt="" class="ui rounded bordered image"
-                             style="width: 120px">
-                        <div>Pay 2</div>
+            <!--付錢-->
+            <div class="ui payQR flowing popup transition hidden">
+                <div class="ui brown basic label">
+                    <div class="ui images" style="font-size: inherit !important;">
+                        <div class="image">
+                            <img src="https://picsum.photos/id/163/200/300" th:src="@{https://picsum.photos/id/163/200/300}" alt="" class="ui rounded bordered image"
+                                 style="width: 120px">
+                            <div>Pay 1</div>
+                        </div>
+                        <div class="image">
+                            <img src="https://picsum.photos/id/155/200/300" th:src="@{https://picsum.photos/id/155/200/300}" alt="" class="ui rounded bordered image"
+                                 style="width: 120px">
+                            <div>Pay 2</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
     </div>
-    <div class="ui attached positive message">
+    <div class="ui attached positive message" th:if="${blog.shareStatement}">
         <!--Blog信息-->
         <div class="ui middle aligned grid">
             <div class="eleven wide column">
@@ -522,7 +526,8 @@ h5,h6{font-size:1em;}
         </div>
     </div>
 
-    <div  class="ui bottom attached segment">
+
+    <div  class="ui bottom attached segment" th:if="${blog.commentabled}">
         <!--留言區域列表-->
         <!--  comment-container 留言button 跳轉  -->
         <div id="comment-container" class="ui teal segment">
@@ -634,7 +639,7 @@ h5,h6{font-size:1em;}
 
                 </div>
             </div>
-        </div>
+
         <div id="comment-form" class="ui form">
 <!--            隱含域，name來接收blog.id th:value取值-->
             <input type="hidden" name="blog.id" th:value="${blog.id}">
@@ -662,11 +667,13 @@ h5,h6{font-size:1em;}
                     <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>發布內容</button>
                 </div>
             </div>
-
+        </div>
         </div>
     </div>
 </div>
 </div>
+</div>
+
 
 <!--Tool Bar-->
 <!--waypoint set id-->
@@ -698,6 +705,7 @@ h5,h6{font-size:1em;}
         </div>
     </div>
 </div>
+
 
 <!--目錄彈出-->
 <div class="ui toc-container flowing popup transition hidden " style="width: 250px !important;">
@@ -809,7 +817,7 @@ h5,h6{font-size:1em;}
     // id,'
     //serurl 正式要改成域名才行
 
-    var serurl = "127.0.0.1:8080";
+    var serurl =/*[[#{blog.serurl}]]*/ "127.0.0.1:8080";
     var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
         text: serurl+url,

@@ -3,7 +3,8 @@ spring:
     mode: HTML
     prefix: classpath:/templates/
     suffix: .html
-
+  messages:
+    basename: i18n/messages
 
   profiles:
     active: dev

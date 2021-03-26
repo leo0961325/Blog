@@ -65,16 +65,21 @@
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header m-text-thin m-text-spaced ">Latest Blog</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">用戶故事 (User story)</a>
-                    <a href="#" class="item">用戶故事 (User story)</a>
-                    <a href="#" class="item">用戶故事 (User story)</a>
+<!--     id="newblog-container"局部刷新使用           -->
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newblogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
+                        <!--/*-->
+                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
+                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
+                        <!--*/-->
+                    </div>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header m-text-thin m-text-spaced ">Contact me</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Email : harvey@gmail.com</a>
+                    <a href="#" class="item" th:text="#{index.email}">Email : harvey@gmail.com</a>
                     <a href="#" class="item">Tel : 0900000000</a>
                 </div>
             </div>
@@ -105,6 +110,9 @@
     <!--waypoint-->
     <script src="../static/lib/waypoints/jquery.waypoints.min.js"
             th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
 
 </th:block>
 
