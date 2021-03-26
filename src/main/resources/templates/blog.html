@@ -481,7 +481,7 @@ h5,h6{font-size:1em;}
             </div>
 
         </div>
-
+<!--付錢開關-->
         <div th:if="${blog.appreciation}">
             <div class="ui center aligned basic segment">
                 <button id="payButton" class="ui brown basic circular button">打賞</button>
@@ -506,7 +506,7 @@ h5,h6{font-size:1em;}
         </div>
 
 
-
+<!--分享開關-->
     </div>
     <div class="ui attached positive message" th:if="${blog.shareStatement}">
         <!--Blog信息-->
@@ -526,7 +526,7 @@ h5,h6{font-size:1em;}
         </div>
     </div>
 
-
+<!--評論開關-->
     <div  class="ui bottom attached segment" th:if="${blog.commentabled}">
         <!--留言區域列表-->
         <!--  comment-container 留言button 跳轉  -->
